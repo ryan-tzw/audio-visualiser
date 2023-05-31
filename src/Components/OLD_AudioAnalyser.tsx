@@ -5,7 +5,7 @@ const AudioAnalyser: React.FC = () => {
     const freqCanvasRef = useRef<HTMLCanvasElement>(null)
     const timeCanvasRef = useRef<HTMLCanvasElement>(null)
 
-    const CANVAS_WIDTH = 400
+    const CANVAS_WIDTH = 300
     const CANVAS_HEIGHT = CANVAS_WIDTH / 2
     // const freqCanvasClassName = `fixed bottom-0 left-0 w-[${CANVAS_WIDTH}px]`
     // const timeCanvasClassName = `fixed bottom-0 left-[${CANVAS_WIDTH}px] w-[${CANVAS_WIDTH}px]`
