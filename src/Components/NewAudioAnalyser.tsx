@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect, useState } from 'react'
 import FreqDomainVisualiser from './FreqDomainVisualiser'
+import TimeDomainVisualiser from './TimeDomainVisualiser'
 
 export default function NewAudioAnalyser() {
     const [freqDomainData, setFreqDomainData] = useState<Uint8Array>(new Uint8Array())
+    const [timeDomainData, setTimeDomainData] = useState<Uint8Array>(new Uint8Array())
 
     useEffect(() => {
         let audioContext: AudioContext | undefined
@@ -31,8 +33,9 @@ export default function NewAudioAnalyser() {
                 setFreqDomainData(freqDomainDataArray)
 
                 // Generate time domain data
-                // const timeDomainData = new Uint8Array(bufferLength)
-                // analyser.getByteTimeDomainData(timeDomainData)
+                const timeDomainDataArray = new Uint8Array(bufferLength)
+                analyser!.getByteTimeDomainData(timeDomainDataArray)
+                setTimeDomainData(timeDomainDataArray)
 
                 // Call the next frame
                 animationFrameId = requestAnimationFrame(renderFrame)
@@ -61,6 +64,7 @@ export default function NewAudioAnalyser() {
     return (
         <>
             <FreqDomainVisualiser audio={freqDomainData} />
+            <TimeDomainVisualiser audio={timeDomainData} />
         </>
     )
 }

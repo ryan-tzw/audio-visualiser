@@ -36,5 +36,5 @@ export default function FreqDomainVisualiser(props: IFreqDomainVisualiserProps) 
         }
     }, [props.audio])
 
-    return <canvas ref={canvasRef} className="fixed top-0 left-0 w-[300px]" />
+    return <canvas ref={canvasRef} className="fixed bottom-0 left-0 w-[300px]" />
 }
