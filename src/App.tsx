@@ -1,9 +1,9 @@
-import NewAudioAnalyser from './Components/NewAudioAnalyser.tsx'
+import AudioAnalyser from './Components/AudioAnalyser.tsx'
 
 export default function App() {
     return (
         <>
-            <NewAudioAnalyser />
+            <AudioAnalyser />
         </>
     )
 }

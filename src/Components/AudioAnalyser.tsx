@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'react'
 import FreqDomainVisualiser from './FreqDomainVisualiser'
 import TimeDomainVisualiser from './TimeDomainVisualiser'
+import MainVisualiser from './MainVisualiser/MainVisualiser'
 
-export default function NewAudioAnalyser() {
+export default function AudioAnalyser() {
     const [freqDomainData, setFreqDomainData] = useState<Uint8Array>(new Uint8Array())
     const [timeDomainData, setTimeDomainData] = useState<Uint8Array>(new Uint8Array())
 
@@ -65,6 +66,7 @@ export default function NewAudioAnalyser() {
         <>
             <FreqDomainVisualiser audio={freqDomainData} />
             <TimeDomainVisualiser audio={timeDomainData} />
+            <MainVisualiser freqData={freqDomainData} timeData={timeDomainData} />
         </>
     )
 }
