@@ -70,6 +70,7 @@ declare module '@react-three/fiber' {
     interface ThreeElements {
         // TODO: Fix this error
         // I think I need to make a custom class extending THREE.ShaderMaterial for MaterialNode<> to play nice.
-        visualiserMaterial: MaterialNode<VisualiserMaterial, typeof VisualiserMaterial>
+        // visualiserMaterial: MaterialNode<VisualiserMaterial, typeof VisualiserMaterial>
+        visualiserMaterial: MaterialNode<THREE.ShaderMaterial, typeof VisualiserMaterial>
     }
 }
