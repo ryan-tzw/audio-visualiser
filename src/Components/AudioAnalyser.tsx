@@ -42,6 +42,7 @@ export default function AudioAnalyser() {
                 animationFrameId = requestAnimationFrame(renderFrame)
             }
 
+            // Begin rendering frames
             renderFrame()
         }
 
