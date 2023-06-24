@@ -45,9 +45,14 @@ export default function MainVisualiser(props: IMainVisualiserProps) {
                     key={VisualiserMaterial.key}
                     side={THREE.DoubleSide}
                     transparent
-                    uTime={0}
-                    uColor={new THREE.Color('#000')}
-                    uAudioDataTexture={textureRef.current}
+                    // uTime={0}
+                    // uColor={new THREE.Color('#000')}
+                    // uAudioDataTexture={textureRef.current}
+                    uniforms={{
+                        uTime: { value: 0 },
+                        uColor: { value: new THREE.Color('#000') },
+                        uAudioDataTexture: { value: textureRef.current },
+                    }}
                 />
             </mesh>
         </Canvas>
@@ -70,7 +75,6 @@ declare module '@react-three/fiber' {
     interface ThreeElements {
         // TODO: Fix this error
         // I think I need to make a custom class extending THREE.ShaderMaterial for MaterialNode<> to play nice.
-        // visualiserMaterial: MaterialNode<VisualiserMaterial, typeof VisualiserMaterial>
         visualiserMaterial: MaterialNode<THREE.ShaderMaterial, typeof VisualiserMaterial>
     }
 }
