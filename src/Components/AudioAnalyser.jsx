@@ -1,24 +1,26 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { useEffect, useState } from 'react'
-import FreqDomainVisualiser from './FreqDomainVisualiser'
-import TimeDomainVisualiser from './TimeDomainVisualiser'
-import MainVisualiser from './MainVisualiser/MainVisualiser'
+import { useState, useEffect } from 'react'
+import FreqDomainVisualiser from './Visualisers/FreqDomainVisualiser.jsx'
+import TimeDomainVisualiser from './Visualisers/TimeDomainVisualiser.jsx'
+import Experience from './Experience.jsx'
 
 export default function AudioAnalyser() {
-    const [freqDomainData, setFreqDomainData] = useState<Uint8Array>(new Uint8Array())
-    const [timeDomainData, setTimeDomainData] = useState<Uint8Array>(new Uint8Array())
+    const [freqDomainData, setFreqDomainData] = useState(new Uint8Array())
+    const [timeDomainData, setTimeDomainData] = useState(new Uint8Array())
 
     useEffect(() => {
-        let audioContext: AudioContext | undefined
-        let analyser: AnalyserNode | undefined
-        let animationFrameId: number
+        let audioContext = new window.AudioContext()
+        let analyser = audioContext.createAnalyser()
+        let animationFrameId
 
-        // Success callback for getUserMedia
-        const handleSuccess = (stream: MediaStream) => {
+        const handleSuccess = (stream) => {
             // Initialise audio context and analyser
             audioContext = new window.AudioContext()
             analyser = audioContext.createAnalyser()
-            analyser.fftSize = 128
+
+            // NOTE: If changing fftSize, also change the frequency
+            // data array length in the MainVisualiser component.
+            // The length should be half of the fftSize
+            analyser.fftSize = 256
 
             // Create a media stream source from the microphone stream
             const source = audioContext.createMediaStreamSource(stream)
@@ -26,16 +28,16 @@ export default function AudioAnalyser() {
 
             const bufferLength = analyser.frequencyBinCount
 
-            // Render frame function for audio visualization
+            // Render frame function for audio visualisation
             const renderFrame = () => {
-                // Generate frequency domain data
+                // Generate freq domain data
                 const freqDomainDataArray = new Uint8Array(bufferLength)
-                analyser!.getByteFrequencyData(freqDomainDataArray)
+                analyser.getByteFrequencyData(freqDomainDataArray)
                 setFreqDomainData(freqDomainDataArray)
 
                 // Generate time domain data
                 const timeDomainDataArray = new Uint8Array(bufferLength)
-                analyser!.getByteTimeDomainData(timeDomainDataArray)
+                analyser.getByteTimeDomainData(timeDomainDataArray)
                 setTimeDomainData(timeDomainDataArray)
 
                 // Call the next frame
@@ -47,7 +49,7 @@ export default function AudioAnalyser() {
         }
 
         // Error callback for getUserMedia
-        const handleError = (error: DOMException) => {
+        const handleError = (error) => {
             console.error('Error accessing microphone:', error)
         }
 
@@ -65,9 +67,9 @@ export default function AudioAnalyser() {
 
     return (
         <>
-            <FreqDomainVisualiser audio={freqDomainData} />
-            <TimeDomainVisualiser audio={timeDomainData} />
-            <MainVisualiser freqData={freqDomainData} timeData={timeDomainData} />
+            <FreqDomainVisualiser data={freqDomainData} />
+            <TimeDomainVisualiser data={timeDomainData} />
+            <Experience freqData={freqDomainData} />
         </>
     )
 }
